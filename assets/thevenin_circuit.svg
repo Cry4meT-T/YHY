@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 260" width="460" height="260" font-family="Microsoft YaHei, SimHei, sans-serif">
+  <rect width="460" height="260" fill="#ffffff"/>
+  <text x="230" y="26" text-anchor="middle" font-size="15" fill="#1f2328">② 含源二端网络（端口 A-B 已标注）</text>
+  <circle cx="80" cy="140" r="20" fill="#fff3cd" stroke="#1f2328" stroke-width="2"/>
+  <line x1="72" y1="135" x2="88" y2="135" stroke="#1f2328" stroke-width="2"/>
+  <line x1="80" y1="143" x2="80" y2="153" stroke="#1f2328" stroke-width="2"/>
+  <text x="54" y="145" font-size="12.5" fill="#1f2328" text-anchor="end">Vs = 12V</text>
+  <line x1="80" y1="120" x2="80" y2="70" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="80" y1="160" x2="80" y2="210" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="80" y1="70" x2="200" y2="70" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <rect x="166" y="58" width="68" height="24" fill="#fff3cd" stroke="#1f2328" stroke-width="2"/>
+  <text x="200" y="50" font-size="12.5" fill="#1f2328" text-anchor="middle">R1 = 1kΩ</text>
+  <line x1="234" y1="70" x2="400" y2="70" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="340" cy="70" r="4" fill="#0969da"/>
+  <rect x="328" y="106" width="24" height="68" fill="#fff3cd" stroke="#1f2328" stroke-width="2"/>
+  <text x="360" y="145" font-size="12.5" fill="#1f2328" text-anchor="start">R2 = 1kΩ</text>
+  <line x1="340" y1="70" x2="340" y2="106" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="340" y1="174" x2="340" y2="210" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="80" y1="210" x2="400" y2="210" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="400" cy="70" r="3.2" fill="#1f2328"/>
+  <text x="410" y="75" font-size="12.5" fill="#0969da" text-anchor="start">A</text>
+  <circle cx="400" cy="210" r="3.2" fill="#1f2328"/>
+  <text x="390" y="215" font-size="12.5" fill="#0969da" text-anchor="end">B (GND)</text>
+  <text x="230" y="245" font-size="12.5" fill="#cf222e" text-anchor="middle">端口 A-B：对它做戴维南等效 → Vth=6V 串 Rth=500Ω</text>
+</svg>

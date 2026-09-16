@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 290" width="520" height="290" font-family="Microsoft YaHei, SimHei, sans-serif">
+  <rect width="520" height="290" fill="#ffffff"/>
+  <text x="260" y="26" text-anchor="middle" font-size="15" fill="#1f2328">③ 小信号等效模型（中频：Cb1 短路、VDD 交流接地）</text>
+  <circle cx="50" cy="150" r="3.2" fill="#1f2328"/>
+  <text x="60" y="155" font-size="12.5" fill="#0969da" text-anchor="start">vi</text>
+  <line x1="50" y1="150" x2="120" y2="150" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="120" cy="150" r="4" fill="#0969da"/>
+  <rect x="108" y="171" width="24" height="68" fill="#fff3cd" stroke="#1f2328" stroke-width="2"/>
+  <text x="140" y="210" font-size="12.5" fill="#1f2328" text-anchor="start">Rg1∥Rg2</text>
+  <line x1="120" y1="150" x2="120" y2="171" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="120" y1="239" x2="120" y2="265" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="120" y1="265" x2="120" y2="273" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="104" y1="273" x2="136" y2="273" stroke="#1f2328" stroke-width="2.6"/>
+  <line x1="110" y1="279" x2="130" y2="279" stroke="#1f2328" stroke-width="2.2"/>
+  <line x1="116" y1="285" x2="124" y2="285" stroke="#1f2328" stroke-width="1.8"/>
+  <line x1="200" y1="150" x2="250" y2="150" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="272" cy="150" r="22" fill="#e7f5ff" stroke="#1f2328" stroke-width="2"/>
+  <path d="M 262 150 l 8 -6 l 0 12 z" fill="#1f2328"/>
+  <text x="272" y="128" font-size="12" fill="#1f2328" text-anchor="middle">gm·vgs</text>
+  <line x1="294" y1="150" x2="380" y2="150" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="380" cy="150" r="4" fill="#0969da"/>
+  <circle cx="450" cy="150" r="3.2" fill="#1f2328"/>
+  <text x="460" y="155" font-size="12.5" fill="#0969da" text-anchor="start">vo</text>
+  <line x1="380" y1="150" x2="380" y2="175" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <rect x="368" y="176" width="24" height="68" fill="#fff3cd" stroke="#1f2328" stroke-width="2"/>
+  <text x="400" y="215" font-size="12.5" fill="#1f2328" text-anchor="start">Rd∥ro</text>
+  <line x1="380" y1="244" x2="380" y2="265" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="120" y1="265" x2="380" y2="265" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="250" y1="265" x2="250" y2="273" stroke="#1f2328" stroke-width="2" stroke-linecap="round"/>
+  <line x1="234" y1="273" x2="266" y2="273" stroke="#1f2328" stroke-width="2.6"/>
+  <line x1="240" y1="279" x2="260" y2="279" stroke="#1f2328" stroke-width="2.2"/>
+  <line x1="246" y1="285" x2="254" y2="285" stroke="#1f2328" stroke-width="1.8"/>
+  <text x="150" y="143" font-size="12.5" fill="#cf222e" text-anchor="start">vgs</text>
+  <path d="M 176 150 l 12 -4 l 0 8 z" fill="#cf222e"/>
+  <text x="260" y="285" font-size="13" fill="#cf222e" text-anchor="middle">Av = vo/vi = -gm·(Rd∥ro) ≈ -3.30</text>
+</svg>

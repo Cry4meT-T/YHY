@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# 生成的缓存
+*.log
+
+# 操作系统
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 编辑器
+.vscode/*
+!.vscode/settings.json
+.idea/

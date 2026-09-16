@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>贪吃蛇 · 手动 / AI 自动演示</title>
+<style>
+  /* ============ 主题变量：切 data-theme 即可整套换色 ============ */
+  :root[data-theme="dark"]{
+    --bg:#0d1117; --bg2:#161b22; --panel:#161b22; --border:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --accent2:#3fb950;
+    --danger:#f85149; --warn:#d29922;
+    --board:#0b1220; --grid:#17233a; --snake:#3fb950; --snakeHead:#7ee787;
+    --food:#f85149; --cycle:#3d5a80; --btn:#21262d; --btnHover:#30363d;
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f8fa; --bg2:#ffffff; --panel:#ffffff; --border:#d0d7de;
+    --text:#1f2328; --muted:#656d76; --accent:#0969da; --accent2:#1a7f37;
+    --danger:#cf222e; --warn:#9a6700;
+    --board:#eef2f6; --grid:#dde5ee; --snake:#1a7f37; --snakeHead:#2da44e;
+    --food:#cf222e; --cycle:#9db8d2; --btn:#f6f8fa; --btnHover:#eaeef2;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:16px; background:var(--bg); color:var(--text);
+    font-family:"Microsoft YaHei","PingFang SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    transition:background .2s,color .2s;
+  }
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+  .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;max-width:1080px;margin:0 auto}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px}
+  .col-main{flex:0 0 auto}
+  .col-side{flex:1 1 320px;min-width:300px;display:flex;flex-direction:column;gap:12px}
+  canvas{
+    display:block;border-radius:10px;background:var(--board);
+    box-shadow:0 0 0 1px var(--border) inset; touch-action:none;
+  }
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+  button{
+    font:inherit;font-size:13px;color:var(--text);background:var(--btn);
+    border:1px solid var(--border);border-radius:8px;padding:7px 12px;cursor:pointer;
+    transition:background .15s,transform .05s;
+  }
+  button:hover{background:var(--btnHover)}
+  button:active{transform:translateY(1px)}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.on{background:var(--accent2);border-color:var(--accent2);color:#fff}
+  button.danger{color:var(--danger)}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .stat .k{font-size:12px;color:var(--muted)}
+  .stat .v{font-size:22px;font-weight:700;margin-top:2px}
+  .stat .v.small{font-size:15px}
+  .bar{height:8px;border-radius:4px;background:var(--bg2);border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .bar>i{display:block;height:100%;background:var(--accent2);width:0%;transition:width .15s}
+  .row{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:13px;margin:6px 0}
+  .muted{color:var(--muted)}
+  label.sw{display:flex;gap:8px;align-items:center;font-size:13px;cursor:pointer}
+  #log{
+    font-family:Consolas,Menlo,monospace;font-size:12px;white-space:pre-wrap;
+    background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+    padding:8px;max-height:140px;overflow:auto;line-height:1.5;
+  }
+  ol#history{margin:0;padding-left:20px;font-size:13px;max-height:180px;overflow:auto}
+  ol#history li{margin:3px 0}
+  .ok{color:var(--accent2)} .bad{color:var(--danger)} .warn{color:var(--warn)}
+  .dpad{display:grid;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,44px);gap:6px;justify-content:center;margin-top:6px}
+  .dpad button{font-size:16px;padding:0}
+  .dpad .up{grid-area:1/2} .dpad .left{grid-area:2/1} .dpad .down{grid-area:2/2} .dpad .right{grid-area:2/3}
+  .kbd{border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:12px;background:var(--btn)}
+  .foot{max-width:1080px;margin:18px auto 0;color:var(--muted);font-size:12px;line-height:1.8}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<h1>🐍 贪吃蛇 · 阶段一（手动）+ 阶段二（AI 自动演示）</h1>
+<div class="sub">纯前端单文件，无任何依赖；双击即可打开。方向键 / WASD 控制，空格暂停，R 重开，T 换主题。</div>
+
+<div class="wrap">
+  <div class="card col-main">
+    <canvas id="cv" width="600" height="600"></canvas>
+    <div class="toolbar">
+      <button id="btnPause">⏸ 暂停 (空格)</button>
+      <button id="btnRestart">↻ 重开一局 (R)</button>
+      <button id="btnTheme">🎨 切换主题 (T)</button>
+    </div>
+    <div class="dpad">
+      <button class="up" data-dir="up">▲</button>
+      <button class="left" data-dir="left">◀</button>
+      <button class="down" data-dir="down">▼</button>
+      <button class="right" data-dir="right">▶</button>
+    </div>
+  </div>
+
+  <div class="col-side">
+    <div class="card">
+      <div class="stats">
+        <div class="stat"><div class="k">当前得分</div><div class="v" id="sScore">0</div></div>
+        <div class="stat"><div class="k">最高分</div><div class="v" id="sBest">0</div></div>
+        <div class="stat"><div class="k">已玩局数</div><div class="v" id="sGames">0</div></div>
+        <div class="stat"><div class="k">蛇长 / 速度</div><div class="v small" id="sLen">3 · 中</div></div>
+      </div>
+      <div class="toolbar">
+        <button id="btnReset" class="danger">重置统计</button>
+        <span class="muted" style="font-size:12px">重置只清空历史战绩，不影响当前这一局</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row"><b>🤖 AI 自动演示（阶段二）</b>
+        <button id="btnAI">开启 AI</button>
+      </div>
+      <div class="row"><span>AI 连续吃食物</span><b id="sAI">0 / 15</b></div>
+      <div class="bar"><i id="aiBar"></i></div>
+      <div class="row"><span>历史最佳连续</span><b id="sAIBest">0</b></div>
+      <div class="row"><span>AI 状态</span><span id="sAIState" class="muted">未开启</span></div>
+      <div class="toolbar">
+        <button id="btnSpeed">速度：中</button>
+        <button id="btnAuto">自动重开：关</button>
+        <button id="btnCycle">显示回路：关</button>
+      </div>
+      <div class="toolbar">
+        <button id="btnSelfTest">▶ 运行 AI 压力测试</button>
+      </div>
+      <div id="log">点「运行 AI 压力测试」：在浏览器里直接无渲染跑 AI，统计存活/达标情况。</div>
+    </div>
+
+    <div class="card">
+      <div class="row"><b>📋 最近 10 局战绩</b><span class="muted" style="font-size:12px">新一局自动追加</span></div>
+      <ol id="history"><li class="muted">还没有记录</li></ol>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  提示：开启 AI 后本局全程无需人工操作；想看它为什么撞不到自己，打开「显示回路」——AI 的安全策略就是围绕这条哈密顿回路做的。
+</div>
+
+<!-- =========================================================================
+     核心逻辑层（纯函数 / 不碰 DOM）—— 可被 Node 直接加载做无头仿真测试
+     ========================================================================= -->
+<script id="snake-core">
+/* ===== CORE-START ===== */
+"use strict";
+var SnakeCore = (function () {
+  var COLS = 20, ROWS = 20;
+  var DIRS = { up:{x:0,y:-1}, down:{x:0,y:1}, left:{x:-1,y:0}, right:{x:1,y:0} };
+  var DIR_LIST = ['up','down','left','right'];
+  var OPPOSITE = { up:'down', down:'up', left:'right', right:'left' };
+  function k(x, y) { return x + ',' + y; }
+
+  /**
+   * 构造一条覆盖整块棋盘的哈密顿回路（每个格子恰好经过一次，且首尾相邻）。
+   * 前提：行数、列数都是偶数（本题 20×20）。
+   * 走法：第 0 行从左到右；中间的偶数行只走第 1..末 列；中间的奇数行从末列走回第 1 列；
+   *       最后一行从末列一直走到第 0 列；再沿第 0 列向上回到起点，闭合成环。
+   */
+  function buildHamiltonianCycle(cols, rows) {
+    var path = [];
+    function push(x, y) { path.push({ x: x, y: y }); }
+    for (var y = 0; y < rows; y++) {
+      if (y === 0) { for (var x0 = 0; x0 < cols; x0++) push(x0, y); }
+      else if (y === rows - 1) { for (var x1 = cols - 1; x1 >= 0; x1--) push(x1, y); }
+      else if (y % 2 === 1) { for (var x2 = cols - 1; x2 >= 1; x2--) push(x2, y); }
+      else { for (var x3 = 1; x3 < cols; x3++) push(x3, y); }
+    }
+    for (var y2 = rows - 2; y2 >= 1; y2--) push(0, y2);
+    return path;
+  }
+
+  function SnakeCore(cols, rows, rng) {
+    this.cols = cols || COLS;
+    this.rows = rows || ROWS;
+    this.rng = rng || Math.random;
+    this.cycle = buildHamiltonianCycle(this.cols, this.rows);
+    this.index = {};
+    for (var i = 0; i < this.cycle.length; i++) this.index[k(this.cycle[i].x, this.cycle[i].y)] = i;
+    this.reset();
+  }
+
+  SnakeCore.prototype.reset = function () {
+    var c = this.cycle;
+    // 初始蛇身直接铺在回路上：头在 cycle[2]，身体顺着回路向后，天然与回路同向
+    this.snake = [{ x: c[2].x, y: c[2].y }, { x: c[1].x, y: c[1].y }, { x: c[0].x, y: c[0].y }];
+    this.dir = this._dirBetween(c[2], c[3]);
+    this.alive = true;
+    this.won = false;
+    this.score = 0;
+    this.steps = 0;
+    this.eaten = 0;          // 本局吃到的食物总数
+    this.food = this._spawnFood();
+    return this;
+  };
+
+  SnakeCore.prototype._dirBetween = function (a, b) {
+    var dx = b.x - a.x, dy = b.y - a.y;
+    for (var i = 0; i < DIR_LIST.length; i++) {
+      var d = DIR_LIST[i];
+      if (DIRS[d].x === dx && DIRS[d].y === dy) return d;
+    }
+    return 'right';
+  };
+
+  SnakeCore.prototype._spawnFood = function () {
+    var free = [];
+    var occ = {};
+    for (var i = 0; i < this.snake.length; i++) occ[k(this.snake[i].x, this.snake[i].y)] = 1;
+    for (var y = 0; y < this.rows; y++)
+      for (var x = 0; x < this.cols; x++)
+        if (!occ[k(x, y)]) free.push({ x: x, y: y });
+    if (!free.length) { this.won = true; this.food = null; return null; }
+    return free[Math.floor(this.rng() * free.length) % free.length];
+  };
+
+  /** 人类操作：不允许 180° 掉头 */
+  SnakeCore.prototype.setDirection = function (d) {
+    if (!DIRS[d]) return false;
+    if (this.snake.length > 1 && d === OPPOSITE[this.dir]) return false;
+    this.dir = d;
+    return true;
+  };
+
+  /** 某格是否被身体占据；不吃食物时，尾巴这一格在本步会让开 */
+  SnakeCore.prototype._blockedForMove = function (x, y, eating) {
+    var limit = eating ? this.snake.length : this.snake.length - 1;
+    for (var i = 0; i < limit; i++) if (this.snake[i].x === x && this.snake[i].y === y) return true;
+    return false;
+  };
+
+  SnakeCore.prototype._inBounds = function (x, y) {
+    return x >= 0 && y >= 0 && x < this.cols && y < this.rows;
+  };
+
+  /** 走一步：返回 'ok' | 'eat' | 'dead' | 'win' */
+  SnakeCore.prototype.step = function () {
+    if (!this.alive) return 'dead';
+    if (this.won) return 'win';
+    var d = DIRS[this.dir];
+    var head = this.snake[0];
+    var nx = head.x + d.x, ny = head.y + d.y;
+    if (!this._inBounds(nx, ny)) { this.alive = false; return 'dead'; }
+    var eating = !!(this.food && this.food.x === nx && this.food.y === ny);
+    if (this._blockedForMove(nx, ny, eating)) { this.alive = false; return 'dead'; }
+    this.snake.unshift({ x: nx, y: ny });
+    this.steps++;
+    if (eating) {
+      this.score += 10;
+      this.eaten++;
+      this.food = this._spawnFood();
+      if (this.won) return 'win';
+      return 'eat';
+    }
+    this.snake.pop();
+    return 'ok';
+  };
+
+  /**
+   * 走法安全检查：下了这一步之后，棋盘上所有空格子是否仍然连通。
+   * 只要出现「被身体围死的孤岛」，蛇迟早会被逼死，所以这种走法直接淘汰。
+   * 检查时把尾巴当成会移开的格子（不计入障碍），这是常规且更宽松的处理。
+   */
+  SnakeCore.prototype._spaceConnected = function (newSnake) {
+    var n = this.cols * this.rows;
+    var block = new Uint8Array(n);
+    for (var i = 0; i < newSnake.length - 1; i++) block[newSnake[i].y * this.cols + newSnake[i].x] = 1;
+    var seen = new Uint8Array(n);
+    var headIdx = newSnake[0].y * this.cols + newSnake[0].x;
+    var stack = [headIdx];
+    seen[headIdx] = 1;
+    var count = 0;
+    var total = n - (newSnake.length - 1);
+    while (stack.length) {
+      var c = stack.pop();
+      count++;
+      var x = c % this.cols, y = (c - x) / this.cols;
+      for (var t = 0; t < 4; t++) {
+        var dd = DIRS[DIR_LIST[t]];
+        var nx = x + dd.x, ny = y + dd.y;
+        if (nx < 0 || ny < 0 || nx >= this.cols || ny >= this.rows) continue;
+        var ni = ny * this.cols + nx;
+        if (seen[ni] || block[ni]) continue;
+        seen[ni] = 1;
+        stack.push(ni);
+      }
+    }
+    return count === total;
+  };
+
+  /** 从食物出发做一次 BFS，得到「每个格子到食物的最短步数」距离场 */
+  SnakeCore.prototype._distField = function (target) {
+    var n = this.cols * this.rows;
+    var dist = new Int32Array(n).fill(-1);
+    var block = new Uint8Array(n);
+    for (var i = 0; i < this.snake.length - 1; i++) block[this.snake[i].y * this.cols + this.snake[i].x] = 1;
+    var start = target.y * this.cols + target.x;
+    dist[start] = 0;
+    var queue = [start], qi = 0;
+    while (qi < queue.length) {
+      var c = queue[qi++];
+      var x = c % this.cols, y = (c - x) / this.cols;
+      for (var t = 0; t < 4; t++) {
+        var dd = DIRS[DIR_LIST[t]];
+        var nx = x + dd.x, ny = y + dd.y;
+        if (nx < 0 || ny < 0 || nx >= this.cols || ny >= this.rows) continue;
+        var ni = ny * this.cols + nx;
+        if (dist[ni] !== -1 || block[ni]) continue;
+        dist[ni] = dist[c] + 1;
+        queue.push(ni);
+      }
+    }
+    return dist;
+  };
+
+  /**
+   * AI 选方向（阶段二核心）。评分顺序：
+   *   1) 这一步之后不能把空格子切成孤岛（_spaceConnected）；
+   *   2) 优先选「到食物的最短路径更短」的格子；
+   *   3) 平手时优先沿着哈密顿回路前进（走位规整，减少碎片）；
+   *   4) 再平手时选离尾巴更远的格子（给自己留更多活动空间）。
+   * 如果蛇已经很长（超过棋盘 60%），直接沿回路走 —— 这是理论上绝对不会死的走法。
+   */
+  SnakeCore.prototype.aiDirection = function () {
+    if (!this.food) return this.dir;
+    var head = this.snake[0];
+    var L = this.cycle.length;
+    var hi = this.index[k(head.x, head.y)];
+    var fi = this.index[k(this.food.x, this.food.y)];
+    var tail = this.snake[this.snake.length - 1];
+    var ti = this.index[k(tail.x, tail.y)];
+    var dist = this._distField(this.food);
+    var longSnake = this.snake.length > this.cols * this.rows * 0.6;
+
+    var best = null, bestKey = null;
+    for (var i = 0; i < 4; i++) {
+      var d = DIR_LIST[i];
+      var dd = DIRS[d];
+      var nx = head.x + dd.x, ny = head.y + dd.y;
+      if (!this._inBounds(nx, ny)) continue;
+      var eating = this.food.x === nx && this.food.y === ny;
+      if (this._blockedForMove(nx, ny, eating)) continue;
+      if (longSnake) continue;                                   // 长蛇阶段只用回路兜底
+      var newSnake = [{ x: nx, y: ny }].concat(
+        this.snake.slice(0, eating ? this.snake.length : this.snake.length - 1));
+      if (!this._spaceConnected(newSnake)) continue;
+      var cell = ny * this.cols + nx;
+      var dfood = dist[cell] < 0 ? 1e9 : dist[cell];
+      var ci = this.index[k(nx, ny)];
+      var onCycle = ci === (hi + 1) % L ? 0 : 1;
+      var tailGap = ((hi - ti + L) % L) - ((ci - ti + L) % L);
+      var keyArr = [dfood, onCycle, -tailGap];
+      if (!bestKey || keyArr[0] < bestKey[0] ||
+          (keyArr[0] === bestKey[0] && keyArr[1] < bestKey[1]) ||
+          (keyArr[0] === bestKey[0] && keyArr[1] === bestKey[1] && keyArr[2] < bestKey[2])) {
+        bestKey = keyArr; best = d;
+      }
+    }
+    if (best) return best;
+
+    // 兜底一：严格沿哈密顿回路走一步（只要那一格不是身体）
+    var cn = this.cycle[(hi + 1) % L];
+    if (this._inBounds(cn.x, cn.y) && !this._blockedForMove(cn.x, cn.y, this.food.x === cn.x && this.food.y === cn.y)) {
+      return this._dirBetween(head, cn);
+    }
+    // 兜底二：随便找一个不会立刻撞死的方向
+    for (var j = 0; j < 4; j++) {
+      var d2 = DIR_LIST[j], v = DIRS[d2];
+      var mx = head.x + v.x, my = head.y + v.y;
+      if (!this._inBounds(mx, my)) continue;
+      var eat2 = this.food.x === mx && this.food.y === my;
+      if (!this._blockedForMove(mx, my, eat2)) return d2;
+    }
+    return this.dir;
+  };
+
+  /** 无头跑一局：最多 maxFood 个食物，返回统计（用于压力测试 / 自检） */
+  SnakeCore.runHeadless = function (opts) {
+    opts = opts || {};
+    var cols = opts.cols || COLS, rows = opts.rows || ROWS;
+    var maxFood = opts.maxFood || 15;
+    var maxSteps = opts.maxSteps || 200000;
+    var rng = opts.rng || Math.random;
+    var g = new SnakeCore(cols, rows, rng);
+    var steps = 0;
+    while (g.alive && !g.won && g.eaten < maxFood && steps < maxSteps) {
+      g.setDirection(g.aiDirection());
+      g.step();
+      steps++;
+    }
+    return {
+      foods: g.eaten,
+      steps: steps,
+      alive: g.alive,
+      won: g.won,
+      success: g.eaten >= maxFood || g.won,
+      score: g.score
+    };
+  };
+
+  SnakeCore.buildHamiltonianCycle = buildHamiltonianCycle;
+  SnakeCore.DIRS = DIRS;
+  SnakeCore.DIR_LIST = DIR_LIST;
+  return SnakeCore;
+})();
+if (typeof module !== 'undefined' && module.exports) module.exports = SnakeCore;
+/* ===== CORE-END ===== */
+</script>
+
+<!-- =========================================================================
+     界面层（DOM / Canvas / 输入 / 存档）
+     ========================================================================= -->
+<script id="snake-ui">
+(function () {
+  "use strict";
+  var COLS = 20, ROWS = 20;
+  var CELL = 600 / COLS;
+
+  var cv = document.getElementById('cv');
+  var ctx = cv.getContext('2d');
+
+  // 高分屏适配，保证线条不糊
+  var dpr = window.devicePixelRatio || 1;
+  cv.width = 600 * dpr; cv.height = 600 * dpr;
+  cv.style.width = '600px'; cv.style.height = '600px';
+  ctx.scale(dpr, dpr);
+
+  /* ---------- 存档（localStorage 不可用时退回内存，file:// 也不怕） ---------- */
+  var memStore = {};
+  var store = {
+    get: function (key, dflt) {
+      try {
+        var v = localStorage.getItem(key);
+        return v === null ? dflt : JSON.parse(v);
+      } catch (e) { return key in memStore ? memStore[key] : dflt; }
+    },
+    set: function (key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); }
+      catch (e) { memStore[key] = val; }
+    }
+  };
+
+  var stats = store.get('snake.stats', { best: 0, games: 0, history: [], aiBestStreak: 0 });
+  if (!stats.history) stats.history = [];
+  if (typeof stats.aiBestStreak !== 'number') stats.aiBestStreak = 0;
+
+  var state = {
+    game: new SnakeCore(COLS, ROWS),
+    ai: false,
+    paused: false,
+    speedIdx: 1,
+    speeds: [ { label: '慢', sps: 5 }, { label: '中', sps: 10 }, { label: '快', sps: 25 }, { label: '极速', sps: 80 } ],
+    autoRestart: false,
+    showCycle: false,
+    streak: 0,
+    lastTime: 0,
+    acc: 0,
+    finished: false
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var theme = store.get('snake.theme', 'dark');
+
+  function applyTheme(t) {
+    theme = t;
+    document.documentElement.setAttribute('data-theme', t);
+    store.set('snake.theme', t);
+  }
+  applyTheme(theme);
+
+  /* ---------- 绘制 ---------- */
+  function draw() {
+    var g = state.game;
+    ctx.clearRect(0, 0, 600, 600);
+
+    // 棋格
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--board');
+    ctx.fillRect(0, 0, 600, 600);
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--grid');
+    ctx.lineWidth = 1;
+    for (var i = 1; i < COLS; i++) {
+      ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, 600); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(600, i * CELL); ctx.stroke();
+    }
+
+    // 哈密顿回路（讲解用）
+    if (state.showCycle) {
+      var cyc = getComputedStyle(document.documentElement).getPropertyValue('--cycle');
+      ctx.strokeStyle = cyc; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      for (var c = 0; c < g.cycle.length; c++) {
+        var p = g.cycle[c];
+        var x = p.x * CELL + CELL / 2, y = p.y * CELL + CELL / 2;
+        if (c === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath(); ctx.stroke(); ctx.globalAlpha = 1;
+    }
+
+    // 食物
+    if (g.food) {
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--food');
+      ctx.beginPath();
+      ctx.arc(g.food.x * CELL + CELL / 2, g.food.y * CELL + CELL / 2, CELL * 0.34, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 蛇身
+    var bodyColor = getComputedStyle(document.documentElement).getPropertyValue('--snake');
+    var headColor = getComputedStyle(document.documentElement).getPropertyValue('--snakeHead');
+    for (var s = g.snake.length - 1; s >= 0; s--) {
+      var seg = g.snake[s];
+      ctx.fillStyle = s === 0 ? headColor : bodyColor;
+      var pad = s === 0 ? 1.5 : 2.5;
+      roundRect(seg.x * CELL + pad, seg.y * CELL + pad, CELL - pad * 2, CELL - pad * 2, 5);
+      ctx.fill();
+    }
+    // 蛇眼睛，指示朝向
+    var h = g.snake[0], d = SnakeCore.DIRS[g.dir];
+    ctx.fillStyle = '#0d1117';
+    var cx = h.x * CELL + CELL / 2, cyy = h.y * CELL + CELL / 2;
+    var ox = d.x * CELL * 0.18, oy = d.y * CELL * 0.18;
+    var px = d.x === 0 ? CELL * 0.18 : 0, py = d.y === 0 ? CELL * 0.18 : 0;
+    ctx.beginPath(); ctx.arc(cx + ox + px, cyy + oy + py, CELL * 0.09, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + ox - px, cyy + oy - py, CELL * 0.09, 0, Math.PI * 2); ctx.fill();
+
+    // 结束遮罩
+    if (!g.alive || g.won) {
+      ctx.fillStyle = 'rgba(0,0,0,.55)';
+      ctx.fillRect(0, 0, 600, 600);
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 40px "Microsoft YaHei",sans-serif';
+      ctx.fillText(g.won ? '🎉 通关！' : '💀 游戏结束', 300, 285);
+      ctx.font = '18px "Microsoft YaHei",sans-serif';
+      ctx.fillText('得分 ' + g.score + '　按 R 或点「重开一局」', 300, 325);
+    } else if (state.paused) {
+      ctx.fillStyle = 'rgba(0,0,0,.45)';
+      ctx.fillRect(0, 0, 600, 600);
+      ctx.fillStyle = '#fff'; ctx.textAlign = 'center';
+      ctx.font = 'bold 34px "Microsoft YaHei",sans-serif';
+      ctx.fillText('已暂停', 300, 300);
+    }
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  /* ---------- 面板刷新 ---------- */
+  function refresh() {
+    var g = state.game;
+    $('sScore').textContent = g.score;
+    $('sBest').textContent = stats.best;
+    $('sGames').textContent = stats.games;
+    $('sLen').textContent = g.snake.length + ' · ' + state.speeds[state.speedIdx].label;
+    $('sAI').textContent = state.streak + ' / 15';
+    $('sAIBest').textContent = stats.aiBestStreak;
+    $('aiBar').style.width = Math.min(100, state.streak / 15 * 100) + '%';
+
+    var st = '未开启';
+    if (state.ai) st = !g.alive ? '本局死亡，等待重开' : (g.won ? '通关' : '运行中（无需人工操作）');
+    $('sAIState').textContent = st;
+    $('sAIState').className = state.ai ? (g.alive ? 'ok' : 'bad') : 'muted';
+
+    $('btnAI').textContent = state.ai ? 'AI 运行中（点击关闭）' : '开启 AI';
+    $('btnAI').className = state.ai ? 'on' : '';
+    $('btnPause').textContent = state.paused ? '▶ 继续 (空格)' : '⏸ 暂停 (空格)';
+    $('btnSpeed').textContent = '速度：' + state.speeds[state.speedIdx].label;
+    $('btnAuto').textContent = '自动重开：' + (state.autoRestart ? '开' : '关');
+    $('btnAuto').className = state.autoRestart ? 'on' : '';
+    $('btnCycle').textContent = '显示回路：' + (state.showCycle ? '开' : '关');
+    $('btnCycle').className = state.showCycle ? 'on' : '';
+
+    var ol = $('history');
+    ol.innerHTML = '';
+    if (!stats.history.length) {
+      ol.innerHTML = '<li class="muted">还没有记录</li>';
+    } else {
+      stats.history.slice(0, 10).forEach(function (r) {
+        var li = document.createElement('li');
+        li.innerHTML = r.time + ' · 得分 <b>' + r.score + '</b> · 蛇长 ' + r.len +
+          ' · ' + (r.mode === 'AI' ? '🤖 AI' : '🧑 手动') +
+          ' · ' + (r.result === 'win' ? '<span class="ok">通关</span>' :
+                   r.result === 'dead' ? '<span class="bad">结束</span>' : '<span class="warn">目标达成</span>') +
+          ' · 吃 ' + r.eaten + ' 个';
+        ol.appendChild(li);
+      });
+    }
+  }
+
+  function log(msg) { $('log').textContent = msg; }
+
+  /* ---------- 一局结束的结算 ---------- */
+  function finishGame(result) {
+    if (state.finished) return;
+    state.finished = true;
+    var g = state.game;
+    stats.games++;
+    if (g.score > stats.best) stats.best = g.score;
+    var now = new Date();
+    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+    stats.history.unshift({
+      time: pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()),
+      score: g.score, len: g.snake.length, eaten: g.eaten,
+      mode: state.ai ? 'AI' : '手动', result: result
+    });
+    stats.history = stats.history.slice(0, 10);
+
+    if (state.ai) {
+      // AI 模式下「连续吃 15 个不死」是硬指标：死了就清零重来
+      if (result === 'dead') state.streak = 0;
+      else if (g.eaten >= 15) { state.streak = g.eaten; if (g.eaten > stats.aiBestStreak) stats.aiBestStreak = g.eaten; }
+    }
+    store.set('snake.stats', stats);
+    refresh();
+  }
+
+  /** AI 目标达成（连续 15 个）时也记一笔，但游戏继续跑 */
+  function checkAIStreak() {
+    var g = state.game;
+    if (!state.ai) return;
+    state.streak = g.eaten;
+    if (state.streak >= 15 && g.alive) {
+      if (state.streak > stats.aiBestStreak) { stats.aiBestStreak = state.streak; store.set('snake.stats', stats); }
+      if (state.streak === 15) {
+        // 首次达标：留存一条「目标达成」记录，同时继续演示
+        stats.history.unshift({
+          time: '本次', score: g.score, len: g.snake.length, eaten: g.eaten,
+          mode: 'AI', result: 'goal'
+        });
+        stats.history = stats.history.slice(0, 10);
+        store.set('snake.stats', stats);
+        log('✅ AI 已连续吃下 15 个食物且未死亡 —— 阶段二硬指标达成。演示仍在继续，看它能跑多远。');
+      }
+    }
+  }
+
+  function restart() {
+    state.game.reset();
+    state.finished = false;
+    if (!state.ai) state.streak = 0;
+    state.acc = 0;
+    refresh();
+    draw();
+  }
+
+  /* ---------- 主循环：用时间累加器控制速度，切换速度不卡顿 ---------- */
+  function loop(t) {
+    if (!state.lastTime) state.lastTime = t;
+    var dt = (t - state.lastTime) / 1000;
+    state.lastTime = t;
+    if (dt > 0.25) dt = 0.25;
+
+    var g = state.game;
+    if (!state.paused && g.alive && !g.won) {
+      state.acc += dt;
+      var interval = 1 / state.speeds[state.speedIdx].sps;
+      var guard = 0;
+      while (state.acc >= interval && guard++ < 200) {
+        state.acc -= interval;
+        if (state.ai) g.setDirection(g.aiDirection());
+        var ev = g.step();
+        if (ev === 'eat') checkAIStreak();
+        if (ev === 'dead' || ev === 'win') { finishGame(ev === 'win' ? 'win' : 'dead'); break; }
+      }
+      if (state.ai && state.streak >= 15) refresh();
+    }
+    if (state.ai && state.autoRestart && (!g.alive || g.won)) {
+      restart();
+    }
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  /* ---------- 输入 ---------- */
+  var keyMap = {
+    ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
+    w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right'
+  };
+  document.addEventListener('keydown', function (e) {
+    if (keyMap[e.key]) {
+      if (!state.ai) state.game.setDirection(keyMap[e.key]);
+      e.preventDefault();
+    } else if (e.key === ' ') {
+      state.paused = !state.paused; refresh(); e.preventDefault();
+    } else if (e.key === 'r' || e.key === 'R') {
+      restart();
+    } else if (e.key === 't' || e.key === 'T') {
+      applyTheme(theme === 'dark' ? 'light' : 'dark');
+    }
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.dpad button'), function (b) {
+    b.addEventListener('click', function () { if (!state.ai) state.game.setDirection(b.dataset.dir); });
+  });
+
+  // 触屏滑动
+  var tsx = 0, tsy = 0;
+  cv.addEventListener('touchstart', function (e) {
+    tsx = e.touches[0].clientX; tsy = e.touches[0].clientY;
+  }, { passive: true });
+  cv.addEventListener('touchend', function (e) {
+    if (state.ai) return;
+    var dx = e.changedTouches[0].clientX - tsx, dy = e.changedTouches[0].clientY - tsy;
+    if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return;
+    state.game.setDirection(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+  }, { passive: true });
+
+  /* ---------- 按钮 ---------- */
+  $('btnPause').addEventListener('click', function () { state.paused = !state.paused; refresh(); });
+  $('btnRestart').addEventListener('click', restart);
+  $('btnTheme').addEventListener('click', function () { applyTheme(theme === 'dark' ? 'light' : 'dark'); draw(); });
+  $('btnReset').addEventListener('click', function () {
+    if (!confirm('确定清空最高分、局数和战绩记录？')) return;
+    stats = { best: 0, games: 0, history: [], aiBestStreak: 0 };
+    state.streak = 0;
+    store.set('snake.stats', stats);
+    refresh();
+  });
+  $('btnAI').addEventListener('click', function () {
+    state.ai = !state.ai;
+    state.paused = false;
+    state.streak = state.game.alive ? state.game.eaten : 0;
+    refresh();
+  });
+  $('btnSpeed').addEventListener('click', function () {
+    state.speedIdx = (state.speedIdx + 1) % state.speeds.length;
+    refresh();
+  });
+  $('btnAuto').addEventListener('click', function () {
+    state.autoRestart = !state.autoRestart;
+    if (state.autoRestart) state.ai = true;
+    refresh();
+  });
+  $('btnCycle').addEventListener('click', function () { state.showCycle = !state.showCycle; refresh(); draw(); });
+
+  /** 浏览器内自检：不渲染，纯逻辑跑 N 局，验证阶段二硬指标 */
+  $('btnSelfTest').addEventListener('click', function () {
+    var N = 40, TARGET = 15;
+    log('正在跑 ' + N + ' 局无头仿真（每局目标 ' + TARGET + ' 个食物）…');
+    setTimeout(function () {
+      var ok = 0, minFoods = Infinity, deaths = 0, totalSteps = 0, lines = [];
+      for (var i = 0; i < N; i++) {
+        var r = SnakeCore.runHeadless({ maxFood: TARGET });
+        totalSteps += r.steps;
+        if (r.success) ok++; else { deaths++; minFoods = Math.min(minFoods, r.foods); }
+        if (i < 5) lines.push('  第' + (i + 1) + '局：吃 ' + r.foods + ' 个，' + (r.success ? '达标 ✅' : '未达标 ❌'));
+      }
+      log('结果：' + ok + '/' + N + ' 局达成「连续吃 ' + TARGET + ' 个不死」\n' +
+          '未达标局数：' + deaths + (deaths ? '（最少只吃到 ' + minFoods + ' 个）' : '') + '\n' +
+          '平均每局步数：' + Math.round(totalSteps / N) + '\n' +
+          lines.join('\n'));
+    }, 30);
+  });
+
+  /* ---------- 启动 ---------- */
+  refresh();
+  draw();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

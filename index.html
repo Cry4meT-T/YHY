@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>叶濠毅的个人主页</title>
+<meta name="description" content="叶濠毅 · 广东工业大学 2026级集成电路设计与集成系统 · 个人主页">
+<!--
+  =========================================================================
+  个人主页（GitHub Pages 首页）
+  部署后网址：https://Cry4meT-T.github.io/YHY/
+  纯手写 HTML/CSS/JS，无框架、无构建步骤。改文字直接改本文件即可。
+  =========================================================================
+-->
+<style>
+  :root{
+    --bg:#0d1117; --bg2:#161b22; --card:#161b22; --border:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --accent2:#3fb950;
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f8fa; --bg2:#fff; --card:#fff; --border:#d0d7de;
+    --text:#1f2328; --muted:#656d76; --accent:#0969da; --accent2:#1a7f37;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:"Microsoft YaHei","PingFang SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    line-height:1.75;transition:background .25s,color .25s;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky;top:0;z-index:10;backdrop-filter:blur(8px);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    border-bottom:1px solid var(--border);
+  }
+  nav{max-width:940px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 20px;flex-wrap:wrap}
+  nav .brand{font-weight:700;margin-right:auto}
+  nav a{font-size:14px;color:var(--muted)}
+  nav a:hover{color:var(--accent)}
+  button{
+    font:inherit;font-size:13px;color:var(--text);background:transparent;
+    border:1px solid var(--border);border-radius:8px;padding:6px 11px;cursor:pointer
+  }
+  button:hover{background:var(--bg2)}
+  .hero{max-width:940px;margin:0 auto;padding:64px 20px 40px;display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+  .avatar{
+    width:132px;height:132px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    font-size:52px;font-weight:700;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.28)
+  }
+  .hero h1{font-size:38px;letter-spacing:1px}
+  .hero .sub{color:var(--muted);margin-top:6px;font-size:16px}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .tag{font-size:13px;padding:3px 11px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+  main{max-width:940px;margin:0 auto;padding:0 20px 70px}
+  section{margin-top:44px}
+  h2{font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:9px}
+  h2::before{content:"";width:4px;height:20px;border-radius:2px;background:var(--accent)}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .card{
+    background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;
+    transition:transform .18s,border-color .18s
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .card h3{font-size:16px;margin-bottom:8px}
+  .card p{font-size:14px;color:var(--muted)}
+  .card .go{display:inline-block;margin-top:12px;font-size:14px}
+  ul.plain{list-style:none;font-size:15px}
+  ul.plain li{padding:7px 0;border-bottom:1px dashed var(--border);display:flex;gap:12px}
+  ul.plain li b{flex:0 0 92px;color:var(--muted);font-weight:400}
+  footer{border-top:1px solid var(--border);color:var(--muted);font-size:13px;text-align:center;padding:26px 20px}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <span class="brand">叶濠毅</span>
+    <a href="#about">关于我</a>
+    <a href="#skills">技能</a>
+    <a href="#works">作品</a>
+    <a href="#contact">联系</a>
+    <button id="themeBtn">🌓 换肤</button>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="avatar">叶</div>
+  <div>
+    <h1>叶濠毅</h1>
+    <div class="sub">广东工业大学 · 2026级 集成电路设计与集成系统</div>
+    <div class="tags">
+      <span class="tag">C / C++</span>
+      <span class="tag">Python</span>
+      <span class="tag">HTML / CSS / JS</span>
+      <span class="tag">电路仿真（PySpice）</span>
+      <span class="tag">AI 辅助编程</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section id="about">
+    <h2>关于我</h2>
+    <div class="card">
+      <p>
+        我是叶濠毅，广东工业大学 2026 级集成电路设计与集成系统专业的新生。
+        来自广东阳江——一个遍地都是猪肠碌的城市。
+        我对电子电路和软件开发都很有兴趣，喜欢用「先动手做出来、再回头抠原理」的方式学习，
+        所以我的项目一般都会带上能直接跑的代码和踩坑记录。
+      </p>
+      <p style="margin-top:10px">
+        这次招新考核里，我独立完成了贪吃蛇小游戏（含 AI 自动演示）和 PySpice 电路仿真三件套，
+        过程全部用 AI 编程工具辅助，但每一处关键逻辑都自己复算、自己验证过。
+      </p>
+      <p style="margin-top:10px">
+        想加入协会的原因很简单：想多认识优秀的学长学姐，找到志同道合的伙伴，
+        一起打比赛、一起进步，也想借此加深自己对集成电路专业的理解。
+      </p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>技能与兴趣</h2>
+    <div class="grid">
+      <div class="card"><h3>💻 编程</h3><p>C / C++ 基础、Python 脚本、HTML/CSS/JS，会用 Git 做版本管理。</p></div>
+      <div class="card"><h3>🔌 电路</h3><p>能用 PySpice / ngspice 做电路仿真：RC 滤波、戴维南等效、MOS 共源放大电路的推导与验证都独立做过一遍。</p></div>
+      <div class="card"><h3>🏀 打篮球</h3><p>有空就往球场跑，喜欢打半场，团队配合比单打独斗有意思。</p></div>
+      <div class="card"><h3>🎵 听 R&amp;B</h3><p>写代码和做作业的背景音基本都是 R&amp;B，节奏稳，心也稳。</p></div>
+      <div class="card"><h3>🎮 游戏</h3><p>喜欢玩游戏，也喜欢琢磨游戏是怎么做出来的——这次干脆自己写了一个带 AI 的贪吃蛇。</p></div>
+      <div class="card"><h3>🧪 折腾</h3><p>对「让程序自己动起来」这件事特别上头，比如写 AI 让贪吃蛇自己通关。</p></div>
+    </div>
+  </section>
+
+  <section id="works">
+    <h2>作品</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>🐍 贪吃蛇（含 AI 自动演示）</h3>
+        <p>单文件 HTML 小游戏：阶段一可键盘 / 触屏手动玩；阶段二内置 AI 自动操作，
+           基于「哈密顿回路 + 安全捷径 + 连通性检查」，连续吃 15 个食物不会死
+           （实测 200 局全部达标）。另做了计分制、主题切换、最近 10 局战绩。</p>
+        <a class="go" href="snake/index.html">▶ 直接开玩</a>
+      </div>
+      <div class="card">
+        <h3>⚡ PySpice 电路仿真三件套</h3>
+        <p>RC 低通滤波、戴维南定理验证、NMOS 共源放大电路：
+           每个都有自己画的电路图、手算公式推导、仿真波形和「理论值 vs 仿真值」对比表。</p>
+        <a class="go" href="pyspice/rc_lowpass.py">▶ 看 RC 脚本</a>
+      </div>
+      <div class="card">
+        <h3>📄 个人简介 PDF</h3>
+        <p>姓名、专业、兴趣、联系方式的纸质版简介。</p>
+        <a class="go" href="profile/intro.pdf">▶ 查看 PDF</a>
+      </div>
+      <div class="card">
+        <h3>📦 源码仓库</h3>
+        <p>全部代码、提示词记录、测试报告与踩坑笔记都在 GitHub 上。</p>
+        <a class="go" href="https://github.com/Cry4meT-T/YHY">▶ GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>联系我</h2>
+    <div class="card">
+      <ul class="plain">
+        <li><b>邮箱</b><a href="mailto:480285558@qq.com">480285558@qq.com</a></li>
+        <li><b>微信</b>fgh124789</li>
+        <li><b>GitHub</b><a href="https://github.com/Cry4meT-T">github.com/Cry4meT-T</a></li>
+        <li><b>本站源码</b><a href="https://github.com/Cry4meT-T/YHY">github.com/Cry4meT-T/YHY</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 叶濠毅 · 广东工业大学 · 本站由 GitHub Pages 托管 · 手写 HTML/CSS/JS
+</footer>
+
+<script>
+  // 主题切换：选择存在 localStorage，刷新后保留
+  var KEY = 'home.theme';
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+</script>
+</body>
+</html>

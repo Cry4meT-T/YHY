@@ -470,24 +470,30 @@ Av = −gm·(Rd∥ro) = −1.7054m × (2k∥58.64k) = −3.2984 V/V   （忽略 
 
 ---
 
-## 9. 这个仓库是怎么一步步做出来的（Git 提交记录建议）
+## 9. 这个仓库是怎么一步步做出来的（Git 提交记录）
 
-为了体现「一步步行做出来的」，提交历史大致是这样的（`git log --oneline`）：
+为了体现「一步步做出来的」，我不是一次性把所有文件丢进去，而是按真实的开发顺序分开提交。
+下面是 `git log --oneline` 的实际输出（最新的一次在最上面）：
 
 ```
-docs: 写 README（分支/合并、命令行、LICENSE、AI 纠错、关键逻辑讲解）
-feat(snake): 加上多局战绩记录（最近 10 局）
-feat(snake): 加上主题切换并持久化到 localStorage
-feat(snake): 计分制与重置按钮
-test(snake): 无头仿真测试，AI 连续吃 15 个 200/200 通过
-feat(snake): 阶段二 AI —— 哈密顿回路 + 连通性检查 + BFS 选路
-feat(snake): 阶段一 可玩版本（方向键/触屏/暂停/重开）
-feat(pyspice): ③ NMOS 共源级放大电路 手算 + 仿真对比
-feat(pyspice): ② 戴维南定理验证
-feat(pyspice): ① RC 低通滤波 手算 + 仿真对比
-feat(web): 个人主页与个人简介 PDF
-chore: 初始化仓库，添加 MIT LICENSE 和 .gitignore
+3587c2a docs: README（分支/合并、命令行、LICENSE 理由、AI 纠错、代码逻辑讲解）
+37bf5b5 docs: 提示词记录与 AI 问答查证过程
+6c275e5 feat(assets): 电路图、直流通路、小信号模型与哈密顿回路示意图
+c2e9820 feat(pyspice): ③ NMOS 共源级放大电路（工作点 + 小信号增益）
+8114c6a feat(pyspice): ② 戴维南定理验证（V_oc / I_sc / 等效电路替换）
+abb3f8c feat(pyspice): ① RC 低通滤波电路 手算 + PySpice 仿真对比
+7275b9d feat(profile): 个人简介（HTML 源文件 + PDF）
+9ce92c3 feat(web): 个人主页（响应式布局 + 深浅色主题切换）
+efc67b4 test(snake): 无头仿真测试脚本与测试报告、游戏截图
+e63fc5d feat(snake): 贪吃蛇单文件游戏（阶段一可玩 + 阶段二 AI 自动演示）
+4e65464 chore: 初始化仓库，添加 MIT LICENSE 与 .gitignore
 ```
+
+一共 12 次提交（上面这份 log 是第 11 次提交时的样子，最后一次提交就是把这段记录本身同步进 README）。
+每一次提交只放一组相关文件，并且**每一组都对应 README 里的一节**，
+方便对照着看「这一步做了什么、为什么这么做」。
+
+> 想自己看的话，在仓库目录执行：`git log --oneline`（简版）或 `git log --stat`（带改动文件）。
 
 ---
 

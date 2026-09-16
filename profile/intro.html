@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简介 - 叶濠毅</title>
+<!--
+  =========================================================================
+  个人简介（打印成 PDF 用）
+  =========================================================================
+  重新生成 PDF 的方法：
+   方法一（命令行一键生成）：
+       "C:\Program Files\Google\Chrome\Application\chrome.exe" --headless=new ^
+         --disable-gpu --no-pdf-header-footer ^
+         --print-to-pdf="profile\intro.pdf" "profile\intro.html"
+   方法二：直接双击打开本文件 → 按 Ctrl+P → 目标选“另存为 PDF” → 保存为 intro.pdf
+  =========================================================================
+-->
+<style>
+  @page { size: A4; margin: 14mm 15mm; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+    color:#1f2328;line-height:1.7;font-size:13.5px;
+  }
+  .head{display:flex;gap:20px;align-items:center;border-bottom:3px solid #0969da;padding-bottom:14px}
+  .avatar{
+    width:78px;height:78px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,#0969da,#1a7f37);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700
+  }
+  h1{font-size:26px;letter-spacing:2px}
+  .title{color:#0969da;font-size:14px;margin-top:2px}
+  .meta{color:#656d76;font-size:12.5px;margin-top:4px}
+  h2{
+    font-size:15px;margin:18px 0 8px;color:#0969da;
+    border-left:4px solid #0969da;padding-left:9px
+  }
+  ul{padding-left:20px}
+  li{margin:3px 0}
+  .row{display:flex;gap:10px;margin:4px 0}
+  .row b{flex:0 0 74px;color:#656d76;font-weight:400}
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12.5px}
+  th,td{border:1px solid #d0d7de;padding:5px 8px;text-align:left;vertical-align:top}
+  th{background:#f6f8fa}
+  .two{display:flex;gap:24px;flex-wrap:wrap}
+  .two>div{flex:1 1 240px}
+  .foot{margin-top:22px;padding-top:10px;border-top:1px solid #d0d7de;color:#656d76;font-size:11.5px;text-align:center}
+  .tag{display:inline-block;border:1px solid #d0d7de;border-radius:999px;padding:1px 10px;font-size:12px;color:#656d76;margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="avatar">叶</div>
+  <div>
+    <h1>叶濠毅</h1>
+    <div class="title">2026级 集成电路设计与集成系统 · 广东工业大学</div>
+    <div class="meta">邮箱：480285558@qq.com　|　微信：fgh124789　|　GitHub：github.com/Cry4meT-T</div>
+  </div>
+</div>
+
+<h2>个人概况</h2>
+<p>
+  我是叶濠毅，广东工业大学 2026 级集成电路设计与集成系统专业新生，来自广东阳江。
+  对电子电路和软件开发都有浓厚兴趣，习惯「先把东西做出来跑起来、再回头抠原理」的学习方式。
+  目前掌握 C/C++ 与 Python 基础，能独立完成小型前端项目（HTML/CSS/JS），并用 Git 做版本管理。
+  本次招新考核中，我独立完成了「贪吃蛇（含 AI 自动演示）」小游戏与「PySpice 电路仿真三件套」，
+  全过程使用 AI 编程工具辅助，但每一处关键逻辑都自己复算、并用测试或仿真交叉验证过。
+</p>
+
+<div class="two">
+  <div>
+    <h2>教育经历</h2>
+    <div class="row"><b>学校</b><span>广东工业大学</span></div>
+    <div class="row"><b>专业</b><span>集成电路设计与集成系统（2026 级）</span></div>
+    <div class="row"><b>时间</b><span>2026 年 9 月 至今（大一在读）</span></div>
+    <div class="row"><b>主修</b><span>高等数学、C 语言程序设计、大学物理等专业基础课</span></div>
+  </div>
+  <div>
+    <h2>技能标签</h2>
+    <span class="tag">C / C++</span><span class="tag">Python</span>
+    <span class="tag">HTML / CSS / JavaScript</span><span class="tag">Git &amp; GitHub</span>
+    <span class="tag">PySpice / ngspice 电路仿真</span><span class="tag">AI 辅助编程</span>
+  </div>
+</div>
+
+<h2>兴趣与特长</h2>
+<ul>
+  <li><b>打篮球</b>：有空就往球场跑，喜欢打半场，团队配合比单打独斗有意思。</li>
+  <li><b>听 R&amp;B</b>：写代码和做作业时的背景音，节奏稳、心也稳。</li>
+  <li><b>玩游戏 &amp; 琢磨游戏</b>：喜欢玩游戏，也喜欢研究游戏是怎么做出来的，这次干脆自己写了一个带 AI 的贪吃蛇。</li>
+  <li><b>家乡</b>：广东阳江——一个遍地都是猪肠碌的城市。</li>
+</ul>
+
+<h2>代表作品</h2>
+<table>
+  <tr><th style="width:26%">作品</th><th>说明</th></tr>
+  <tr>
+    <td>贪吃蛇（含 AI 自动演示）</td>
+    <td>单文件 HTML 游戏，无框架依赖、双击即玩。阶段一支持键盘 / 触屏手动操作，有得分、最高分、暂停、重开；
+        阶段二内置 AI 自动操作，基于「哈密顿回路 + 安全捷径 + 连通性检查」，可连续吃 15 个食物不死
+        （实测 200 局全部达标，加压到 150 个仍 50/50 通过）。另实现计分制、主题切换与最近 10 局战绩。</td>
+  </tr>
+  <tr>
+    <td>PySpice 电路仿真三件套</td>
+    <td>RC 低通滤波（τ、fc、增益与相移的手算与仿真对比）、戴维南定理验证（V_oc / I_sc / 等效电路替换验证）、
+        NMOS 共源放大电路（静态工作点 V_GS/I_D/V_DS、饱和区判断、gm 与小信号增益 Av），
+        全部附电路图、公式推导与「理论值 vs 仿真值」对比表。</td>
+  </tr>
+  <tr>
+    <td>个人主页</td>
+    <td>纯手写 HTML/CSS/JS，响应式布局 + 深浅色主题切换，部署在 GitHub Pages。
+        网址：https://Cry4meT-T.github.io/YHY/</td>
+  </tr>
+</table>
+
+<h2>自我评价</h2>
+<p>
+  学习能力强，遇到问题习惯先查证再下结论，不迷信 AI 给出的答案——比如它会用错误的方程去解直流工作点，
+  我会回到电路本身重新推一遍，再用仿真验证。
+  做事愿意把过程记录清楚（提示词、踩坑、验证方法），方便复盘，也方便讲给别人听。
+  我想加入协会，是因为想多认识优秀的学长学姐，找到志同道合的伙伴，一起打比赛、一起进步，
+  也想借此加深自己对集成电路专业的理解。
+</p>
+
+<div class="foot">叶濠毅 · 广东工业大学 2026 级 · 个人简介 · 2026 年 9 月</div>
+
+</body>
+</html>

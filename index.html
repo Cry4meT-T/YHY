@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>叶濠毅的个人主页</title>
-<meta name="description" content="叶濠毅 · 广东工业大学 2026级集成电路设计与集成系统 · 个人主页">
+<meta name="description" content="叶濠毅 · 广东工业大学 2026级集成电路设计与集成系统 · 来自广东阳江 · 喜欢打篮球、玩游戏、听 R&B">
 <!--
   =========================================================================
   个人主页（GitHub Pages 首页）
@@ -26,7 +26,7 @@
   body{
     background:var(--bg);color:var(--text);
     font-family:"Microsoft YaHei","PingFang SC",system-ui,-apple-system,"Segoe UI",sans-serif;
-    line-height:1.75;transition:background .25s,color .25s;
+    line-height:1.8;transition:background .25s,color .25s;
   }
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
@@ -67,11 +67,13 @@
   .card:hover{transform:translateY(-3px);border-color:var(--accent)}
   .card h3{font-size:16px;margin-bottom:8px}
   .card p{font-size:14px;color:var(--muted)}
+  .card p + p{margin-top:8px}
   .card .go{display:inline-block;margin-top:12px;font-size:14px}
   ul.plain{list-style:none;font-size:15px}
   ul.plain li{padding:7px 0;border-bottom:1px dashed var(--border);display:flex;gap:12px}
   ul.plain li b{flex:0 0 92px;color:var(--muted);font-weight:400}
   footer{border-top:1px solid var(--border);color:var(--muted);font-size:13px;text-align:center;padding:26px 20px}
+  .note{font-size:13px;color:var(--muted);background:var(--bg2);border:1px dashed var(--border);border-radius:10px;padding:12px 14px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -80,7 +82,8 @@
   <nav>
     <span class="brand">叶濠毅</span>
     <a href="#about">关于我</a>
-    <a href="#skills">技能</a>
+    <a href="#home">家乡</a>
+    <a href="#hobby">兴趣</a>
     <a href="#works">作品</a>
     <a href="#contact">联系</a>
     <button id="themeBtn">🌓 换肤</button>
@@ -91,13 +94,12 @@
   <div class="avatar">叶</div>
   <div>
     <h1>叶濠毅</h1>
-    <div class="sub">广东工业大学 · 2026级 集成电路设计与集成系统</div>
+    <div class="sub">广东工业大学 · 2026级 集成电路设计与集成系统 · 来自广东阳江</div>
     <div class="tags">
-      <span class="tag">C / C++</span>
-      <span class="tag">Python</span>
-      <span class="tag">HTML / CSS / JS</span>
-      <span class="tag">电路仿真（PySpice）</span>
-      <span class="tag">AI 辅助编程</span>
+      <span class="tag">🏀 打篮球</span>
+      <span class="tag">🎵 听 R&amp;B</span>
+      <span class="tag">🎮 玩游戏</span>
+      <span class="tag">📘 编程入门中</span>
     </div>
   </div>
 </div>
@@ -107,60 +109,93 @@
     <h2>关于我</h2>
     <div class="card">
       <p>
-        我是叶濠毅，广东工业大学 2026 级集成电路设计与集成系统专业的新生。
-        来自广东阳江——一个遍地都是猪肠碌的城市。
-        我对电子电路和软件开发都很有兴趣，喜欢用「先动手做出来、再回头抠原理」的方式学习，
-        所以我的项目一般都会带上能直接跑的代码和踩坑记录。
+        我是叶濠毅，广东工业大学 2026 级集成电路设计与集成系统专业的新生，来自广东阳江。
+        性格比较随和，也好相处，平时喜欢和同学一起打球、一起开黑，课余时间大多在球场或者耳机里度过。
       </p>
-      <p style="margin-top:10px">
-        这次招新考核里，我独立完成了贪吃蛇小游戏（含 AI 自动演示）和 PySpice 电路仿真三件套，
-        过程全部用 AI 编程工具辅助，但每一处关键逻辑都自己复算、自己验证过。
+      <p>
+        专业上我是零基础小白，编程和电路都要从头学。这次招新考核是我第一次真正动手做东西，
+        靠着 AI 编程工具的帮助，一点点把作品做了出来。过程比我想象中难，但也比我想象中有意思——
+        尤其是看到自己写出来的东西真的能跑起来的时候。
       </p>
-      <p style="margin-top:10px">
-        想加入协会的原因很简单：想多认识优秀的学长学姐，找到志同道合的伙伴，
-        一起打比赛、一起进步，也想借此加深自己对集成电路专业的理解。
+      <p>
+        我特别希望能早点找到方向，所以想加入协会：多认识优秀的学长学姐，找到志同道合的伙伴，
+        一起打比赛、一起进步。起步晚没关系，我愿意花时间补上来。
       </p>
     </div>
   </section>
 
-  <section id="skills">
-    <h2>技能与兴趣</h2>
+  <section id="home">
+    <h2>我的家乡：广东阳江</h2>
+    <div class="card">
+      <p>
+        阳江是一座靠海的小城，生活节奏不快，很适合住人。
+        最有名的应该是<strong>猪肠碌</strong>——一条条米粉皮卷着馅，淋上酱油和蒜蓉辣椒，
+        是我们从小吃到大的早餐，也是每个在外读书的阳江人最想念的味道。
+      </p>
+      <p>
+        除了猪肠碌，阳江还有海陵岛的沙滩、阳江豆豉和各种各样的海鲜。
+        以后有机会欢迎来阳江玩，我负责带路找吃的。
+      </p>
+    </div>
+  </section>
+
+  <section id="hobby">
+    <h2>我的兴趣爱好</h2>
     <div class="grid">
-      <div class="card"><h3>💻 编程</h3><p>C / C++ 基础、Python 脚本、HTML/CSS/JS，会用 Git 做版本管理。</p></div>
-      <div class="card"><h3>🔌 电路</h3><p>能用 PySpice / ngspice 做电路仿真：RC 滤波、戴维南等效、MOS 共源放大电路的推导与验证都独立做过一遍。</p></div>
-      <div class="card"><h3>🏀 打篮球</h3><p>有空就往球场跑，喜欢打半场，团队配合比单打独斗有意思。</p></div>
-      <div class="card"><h3>🎵 听 R&amp;B</h3><p>写代码和做作业的背景音基本都是 R&amp;B，节奏稳，心也稳。</p></div>
-      <div class="card"><h3>🎮 游戏</h3><p>喜欢玩游戏，也喜欢琢磨游戏是怎么做出来的——这次干脆自己写了一个带 AI 的贪吃蛇。</p></div>
-      <div class="card"><h3>🧪 折腾</h3><p>对「让程序自己动起来」这件事特别上头，比如写 AI 让贪吃蛇自己通关。</p></div>
+      <div class="card">
+        <h3>🏀 打篮球</h3>
+        <p>这是我最主要的爱好，有空就往球场跑，一般打半场。
+           比起一个人单打独斗，我更喜欢和队友配合——传球、挡拆、跑位，赢球是一起赢的。</p>
+      </div>
+      <div class="card">
+        <h3>🎵 听 R&amp;B</h3>
+        <p>耳机基本不离身，写作业、走路、发呆的时候都在听。R&amp;B 的节奏很舒服，能让人静下来。</p>
+      </div>
+      <div class="card">
+        <h3>🎮 玩游戏</h3>
+        <p>喜欢和朋友一起开黑，也喜欢琢磨游戏里的机制。
+           这次考核我选了贪吃蛇，还给它加了一个「自动玩」的功能，算是把爱好和作业凑到一块了。</p>
+      </div>
     </div>
   </section>
 
   <section id="works">
-    <h2>作品</h2>
+    <h2>这次考核我做的东西</h2>
     <div class="grid">
       <div class="card">
-        <h3>🐍 贪吃蛇（含 AI 自动演示）</h3>
-        <p>单文件 HTML 小游戏：阶段一可键盘 / 触屏手动玩；阶段二内置 AI 自动操作，
-           基于「哈密顿回路 + 安全捷径 + 连通性检查」，连续吃 15 个食物不会死
-           （实测 200 局全部达标）。另做了计分制、主题切换、最近 10 局战绩。</p>
-        <a class="go" href="snake/index.html">▶ 直接开玩</a>
+        <h3>🐍 贪吃蛇小游戏</h3>
+        <p>用网页做的，双击就能打开。能用键盘或手机触屏操作，有得分、最高分，
+           还能切换深色/浅色两种界面，会记录最近 10 局的成绩。</p>
+        <p>最花时间的部分是第 2 张卡片里的「自动玩」功能。</p>
+        <a class="go" href="snake/index.html">▶ 点开玩一下</a>
       </div>
       <div class="card">
-        <h3>⚡ PySpice 电路仿真三件套</h3>
-        <p>RC 低通滤波、戴维南定理验证、NMOS 共源放大电路：
-           每个都有自己画的电路图、手算公式推导、仿真波形和「理论值 vs 仿真值」对比表。</p>
-        <a class="go" href="pyspice/rc_lowpass.py">▶ 看 RC 脚本</a>
+        <h3>🤖 让游戏自己玩</h3>
+        <p>游戏里有一个开关，打开之后它会自己操作，连续吃到 15 个食物都不会撞到自己，
+           全程不用我动手。这也是这次最有成就感的部分。</p>
+        <p>想看效果：打开游戏 → 点「开启 AI」→ 把速度调到极速。</p>
+        <a class="go" href="snake/index.html">▶ 看它自己玩</a>
+      </div>
+      <div class="card">
+        <h3>⚡ 三个电路仿真练习</h3>
+        <p>用 Python 软件模拟电路：一个滤波电路、一个定理验证、一个放大电路。
+           题目给了公式，我按公式一步步算，再用软件跑一遍，把两次结果对在一起看对不对得上。</p>
+        <a class="go" href="pyspice/rc_lowpass.py">▶ 看其中一个脚本</a>
       </div>
       <div class="card">
         <h3>📄 个人简介 PDF</h3>
-        <p>姓名、专业、兴趣、联系方式的纸质版简介。</p>
+        <p>就是这份简介的纸质版：姓名、专业、家乡、兴趣和联系方式。</p>
         <a class="go" href="profile/intro.pdf">▶ 查看 PDF</a>
       </div>
       <div class="card">
-        <h3>📦 源码仓库</h3>
-        <p>全部代码、提示词记录、测试报告与踩坑笔记都在 GitHub 上。</p>
-        <a class="go" href="https://github.com/Cry4meT-T/YHY">▶ GitHub</a>
+        <h3>📦 全部源码</h3>
+        <p>上面这些东西的代码、我踩过的坑、以及我给 AI 的提示词，都放在 GitHub 仓库里。</p>
+        <a class="go" href="https://github.com/Cry4meT-T/YHY">▶ 打开仓库</a>
       </div>
+    </div>
+    <div class="note">
+      说明：我目前是编程零基础，这些作品是在 AI 编程工具的帮助下完成的。
+      代码我能看懂大概，也自己动手改过几处、跑过测试，但还在继续学习，不敢说自己「精通」。
     </div>
   </section>
 

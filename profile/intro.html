@@ -7,7 +7,7 @@
   =========================================================================
   个人简介（打印成 PDF 用）
   =========================================================================
-  想改内容就直接改下面的文字，改完重新生成 PDF：
+  改完文字重新生成 PDF：
    方法一（命令行一键生成）：
        "C:\Program Files\Google\Chrome\Application\chrome.exe" --headless=new ^
          --disable-gpu --no-pdf-header-footer ^
@@ -16,103 +16,67 @@
   =========================================================================
 -->
 <style>
-  @page { size: A4; margin: 15mm 16mm; }
+  @page { size: A4; margin: 20mm 18mm; }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;
-    color:#1f2328;line-height:1.85;font-size:14px;
+    color:#222;line-height:1.95;font-size:14px;
   }
-  .head{display:flex;gap:20px;align-items:center;border-bottom:3px solid #0969da;padding-bottom:14px}
-  .avatar{
-    width:76px;height:76px;border-radius:50%;flex:0 0 auto;
-    background:linear-gradient(135deg,#0969da,#1a7f37);color:#fff;
-    display:flex;align-items:center;justify-content:center;font-size:33px;font-weight:700
-  }
-  h1{font-size:26px;letter-spacing:2px}
-  .title{color:#0969da;font-size:14px;margin-top:2px}
-  .meta{color:#656d76;font-size:12.5px;margin-top:4px}
-  h2{
-    font-size:15px;margin:20px 0 8px;color:#0969da;
-    border-left:4px solid #0969da;padding-left:9px
-  }
-  p{margin:6px 0}
-  ul{padding-left:20px}
-  li{margin:4px 0}
-  .row{display:flex;gap:10px;margin:4px 0}
-  .row b{flex:0 0 62px;color:#656d76;font-weight:400}
-  .card{background:#f6f8fa;border:1px solid #d0d7de;border-radius:8px;padding:12px 14px;margin-top:8px}
-  .foot{margin-top:26px;padding-top:10px;border-top:1px solid #d0d7de;color:#656d76;font-size:11.5px;text-align:center}
+  h1{font-size:25px;letter-spacing:3px;margin-bottom:6px}
+  .sub{color:#555;font-size:13.5px}
+  .line{border-bottom:1px solid #ccc;margin:14px 0 20px}
+  h2{font-size:15px;margin:22px 0 6px;color:#111;font-weight:700}
+  h2 span{color:#999;font-size:12px;font-weight:400;margin-left:8px}
+  p{margin:4px 0}
+  ul{padding-left:18px}
+  li{margin:3px 0}
+  .info{font-size:13.5px;color:#333}
+  .info b{display:inline-block;width:52px;color:#888;font-weight:400}
+  .foot{margin-top:30px;color:#999;font-size:11.5px}
 </style>
 </head>
 <body>
 
-<div class="head">
-  <div class="avatar">叶</div>
-  <div>
-    <h1>叶濠毅</h1>
-    <div class="title">广东工业大学 · 2026 级 集成电路设计与集成系统</div>
-    <div class="meta">邮箱：480285558@qq.com　|　微信：fgh124789　|　GitHub：github.com/Cry4meT-T</div>
-  </div>
-</div>
+<h1>叶濠毅</h1>
+<div class="sub">广东工业大学　2026 级　集成电路设计与集成系统</div>
+<div class="sub">邮箱 480285558@qq.com　微信 fgh124789　GitHub github.com/Cry4meT-T</div>
+<div class="line"></div>
 
-<h2>基本信息</h2>
-<div class="row"><b>姓名</b><span>叶濠毅</span></div>
-<div class="row"><b>学校</b><span>广东工业大学</span></div>
-<div class="row"><b>专业</b><span>集成电路设计与集成系统（2026 级）</span></div>
-<div class="row"><b>家乡</b><span>广东阳江</span></div>
-<div class="row"><b>兴趣</b><span>打篮球、玩游戏、听 R&amp;B</span></div>
-
-<h2>关于我</h2>
-<p>
-  我是叶濠毅，广东工业大学 2026 级集成电路设计与集成系统专业的新生，来自广东阳江。
-  我是个性格比较随和、也比较好相处的人，平时喜欢和同学一起打球、一起开黑，
-  课余时间大多在球场或者耳机里度过。
-</p>
-<p>
-  我属于专业上的零基础小白，编程和电路都要从头学。这次招新考核我是第一次接触这些东西，
-  靠着 AI 编程工具的帮助，一点点把作品做了出来。过程比我想象中难，但也比我想象中有意思——
-  尤其是看到自己写出来的东西真的能跑起来的时候。
-</p>
-
-<h2>我的家乡：广东阳江</h2>
-<p>
-  阳江是一座靠海的小城，生活节奏不快，很适合住人。
-  提到阳江，最有名的应该是<strong>猪肠碌</strong>——一条条的米粉皮卷着馅，
-  淋上酱油和蒜蓉辣椒，是我们从小吃到大的早餐，也是每个在外读书的阳江人最想念的味道。
-  除了猪肠碌，阳江还有海陵岛的沙滩、阳江豆豉和各种各样的海鲜。
-  如果以后有机会，欢迎来阳江玩，我负责带路找吃的。
-</p>
+<h2>自我介绍</h2>
+<p>我是叶濠毅，广东工业大学 2026 级集成电路设计与集成系统专业的新生，广东阳江人。</p>
+<p>平时爱打篮球，耳机里常年放着 R&amp;B，也喜欢和朋友一起打游戏。</p>
+<p>专业上我是零基础，编程和电路都还在学。这次招新考核是我第一次动手做完整的东西，
+靠着 AI 工具把贪吃蛇和三个电路仿真做完了，中间卡了很多次，东西能跑起来的时候还挺开心的。</p>
 
 <h2>兴趣爱好</h2>
 <ul>
-  <li><b>打篮球</b>：这是我最主要的爱好。有空就往球场跑，一般打半场，
-      比起一个人单打独斗，我更喜欢和队友配合——传球、挡拆、跑位，赢球是一起赢的。</li>
-  <li><b>玩游戏</b>：喜欢和朋友一起开黑，也喜欢琢磨游戏里的机制。
-      这次考核我选了贪吃蛇，还给它加了一个「自动玩」的功能，算是把爱好和作业凑到一块了。</li>
-  <li><b>听 R&amp;B</b>：耳机基本不离身，写作业、走路、发呆的时候都在听。
-      R&amp;B 的节奏很舒服，能让人静下来。</li>
+  <li><b>打篮球</b>：花时间最多的爱好，一般打半场，比起自己单干我更喜欢传球配合。</li>
+  <li><b>听歌</b>：主要是 R&amp;B，写作业、走路、等车的时候都在听。</li>
+  <li><b>玩游戏</b>：常和朋友开黑，也喜欢琢磨游戏是怎么做出来的，这次的贪吃蛇就是这么来的。</li>
 </ul>
 
-<h2>这次考核我做了什么</h2>
-<div class="card">
-  <p><b>1. 一个能自己玩的贪吃蛇小游戏</b>——用网页做的，双击就能打开。
-     能用键盘或手机触屏操作，有得分、最高分，还能换深色/浅色两种界面。</p>
-  <p><b>2. 让游戏自己玩</b>——在游戏里加了一个开关，打开之后它会自己操作，
-     连续吃到 15 个食物都不会撞死。这也是这次最花时间、最有成就感的部分。</p>
-  <p><b>3. 三个电路仿真练习</b>——用 Python 软件模拟电路：一个滤波电路、一个定理验证、
-     一个放大电路。题目给了公式，我按公式一步步算，再用软件跑一遍，把两次结果对在一起。</p>
-  <p><b>4. 一个个人主页</b>——就是放这份简介和上面作品的地方，已经传到网上，可以点开看。</p>
-</div>
+<h2>家乡</h2>
+<p>我来自广东阳江，一座靠海的小城，节奏慢，吃的多，猪肠碌和海鲜都挺有名。</p>
+<p>以后有机会来阳江玩，我带路。</p>
 
-<h2>我想加入协会的原因</h2>
-<p>
-  说实话，我现在专业上还几乎是白纸，但也正因为这样，我特别希望能早点找到方向。
-  我想加入协会，一是想多认识优秀的学长学姐，二是想找到志同道合的伙伴——
-  一起打比赛、一起打球、一起进步。我知道自己起步晚，但我愿意花时间补上来，
-  也希望能在协会里真正把集成电路这个专业学明白。
+<h2>基本信息</h2>
+<p class="info">
+  <b>姓名</b>叶濠毅<br>
+  <b>学校</b>广东工业大学（2026 级）<br>
+  <b>专业</b>集成电路设计与集成系统<br>
+  <b>家乡</b>广东阳江
 </p>
 
-<div class="foot">叶濠毅 · 广东工业大学 2026 级 · 个人简介 · 2026 年 9 月</div>
+<h2>这次考核做的东西</h2>
+<p>一个贪吃蛇小游戏，能自己玩，也能让它自己玩：打开开关以后它会自己操作，连续吃 15 个食物都不撞死。</p>
+<p>三个电路仿真，按题目给的公式先手算一遍，再用 Python 跑一遍，把两次结果对在一起看对不对得上。</p>
+<p>还有一个就是你现在看到的这个个人主页，上面这些都能点开。</p>
+
+<h2>为什么想加入协会</h2>
+<p>一来想认识些学长学姐，二来想找几个能一起打球、一起做东西的朋友。</p>
+<p>我起步比别人晚，但愿意花时间补上。</p>
+
+<div class="foot">叶濠毅　2026 年 9 月</div>
 
 </body>
 </html>
